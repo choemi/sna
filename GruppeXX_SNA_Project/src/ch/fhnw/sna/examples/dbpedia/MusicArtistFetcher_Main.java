@@ -1,7 +1,7 @@
 package ch.fhnw.sna.examples.dbpedia;
 
 import ch.fhnw.sna.examples.dbpedia.model.MusicArtistGraph;
-
+// TEST
 /**
  * 
  * Main class for Music artist fetcher
