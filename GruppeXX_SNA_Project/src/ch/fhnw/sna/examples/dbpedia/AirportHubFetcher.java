@@ -1,5 +1,6 @@
 package ch.fhnw.sna.examples.dbpedia;
 
+/*
 import static ch.fhnw.sna.util.GenreDetectionUtil.isBlues;
 import static ch.fhnw.sna.util.GenreDetectionUtil.isCountry;
 import static ch.fhnw.sna.util.GenreDetectionUtil.isElectronic;
@@ -10,7 +11,7 @@ import static ch.fhnw.sna.util.GenreDetectionUtil.isLatin;
 import static ch.fhnw.sna.util.GenreDetectionUtil.isPop;
 import static ch.fhnw.sna.util.GenreDetectionUtil.isRock;
 import static ch.fhnw.sna.util.GenreDetectionUtil.isSoul;
-
+*/
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -41,15 +42,15 @@ import ch.fhnw.sna.examples.dbpedia.model.MusicArtistGraph;
  * Fetches the Music Artist Association Network from dbpedia
  * 
  */
-public class MusicArtistFetcher {
+public class AirportHubFetcher {
 
 	private static final String DBPEDIA_SPARQL_ENDPOINT = "http://dbpedia.org/sparql";
 	private static final DateTimeFormatter ACTIVE_YEAR_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-	private static final Logger LOG = LoggerFactory.getLogger(MusicArtistFetcher.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AirportHubFetcher.class);
 
-	public MusicArtistGraph fetch() {
-		MusicArtistGraph graph = new MusicArtistGraph();
+	public AirportHubGraph fetch() {
+		AirportHubGraph graph = new AirportHubGraph();
 		LOG.info("Start fetching Music Artist Network");
 		fetchAssociations(graph);
 		LOG.info("Fiinished fetching Music Artist Network");
