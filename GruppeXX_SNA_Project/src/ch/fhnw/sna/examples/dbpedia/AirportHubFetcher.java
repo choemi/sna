@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
-import ch.fhnw.sna.examples.dbpedia.model.MusicArtist;
-import ch.fhnw.sna.examples.dbpedia.model.MusicArtistGraph;
+import ch.fhnw.sna.examples.dbpedia.model.Airline;
+import ch.fhnw.sna.examples.dbpedia.model.AirlineGraph;
 
 /**
  * Fetches the Music Artist Association Network from dbpedia
@@ -49,18 +49,18 @@ public class AirportHubFetcher {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AirportHubFetcher.class);
 
-	public AirportHubGraph fetch() {
-		AirportHubGraph graph = new AirportHubGraph();
+	public AirlineGraph fetch() {
+		AirlineGraph graph = new AirlineGraph();
 		LOG.info("Start fetching Music Artist Network");
 		fetchAssociations(graph);
 		LOG.info("Fiinished fetching Music Artist Network");
 		LOG.info("Start fetching node attributs");
-		enrichNodeInformation(graph);
+		//enrichNodeInformation(graph);
 		LOG.info("Finished fetching node attributes");
 		return graph;
 	}
 
-	private void fetchAssociations(MusicArtistGraph graph) {
+	private void fetchAssociations(AirlineGraph graph) {
 		final int LIMIT = Integer.MAX_VALUE; // Means no limit
 		boolean hasMoreResults = true;
 		int currentOffset = 0;
@@ -68,7 +68,19 @@ public class AirportHubFetcher {
 		while (hasMoreResults && fetchedTotal < LIMIT) {
 			
 			
-			String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
+			String queryString = "PREFIX dbo: <http://dbpedia.org/ontology/subsidiary> \n"
+     + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
+     + "SELECT COUNT(*) ?Company?HubAirport?Alliance?ParentCompany"
+     + " WHERE { { { ?Company <http://dbpedia.org/ontology/hubAirport> ?HubAirport } "
+     + "UNION  { ?Company <http://dbpedia.org/property/hubs> ?HubAirport } "
+     + "}.FILTER regex(?HubAirport, \"http\") "
+     + ". OPTIONAL { ?Company  <http://dbpedia.org/ontology/alliance> ?Alliance}"
+     + ". OPTIONAL { ?Company  <http://dbpedia.org/ontology/parentCompany> ?ParentCompany} }  LIMIT 5000 OFFSET 1"; 
+
+					
+					
+			
+		/*	String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n"
 					+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
 					+ "PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> \n" +
 
@@ -79,7 +91,7 @@ public class AirportHubFetcher {
 					+ "?sourceuri rdfs:label ?sourcename ." + "?targeturi rdfs:label ?targetname ."
 					+ "FILTER langMatches( lang(?sourcename), \"en\" ) . \n"
 					+ "FILTER langMatches( lang(?targetname), \"en\" )" + "} LIMIT 1000 OFFSET " + currentOffset;
-
+*/
 			LOG.debug("Querying: {}", queryString);
 
 			Query query = QueryFactory.create(queryString);
@@ -94,9 +106,9 @@ public class AirportHubFetcher {
 					String toUri = sol.getResource("targeturi").getURI();
 					String from = sol.getLiteral("sourcename").getLexicalForm();
 					String to = sol.getLiteral("targetname").getLexicalForm();
-					graph.addArtistIfNotExists(fromUri, from);
-					graph.addArtistIfNotExists(toUri, to);
-					graph.addAssociation(fromUri, toUri);
+					//graph.addArtistIfNotExists(fromUri, from);
+					//graph.addArtistIfNotExists(toUri, to);
+					//graph.addAssociation(fromUri, toUri);
 				}
 			}
 			LOG.debug("Fetches {} new results.", resultCounter);
@@ -107,9 +119,9 @@ public class AirportHubFetcher {
 			}
 		}
 	}
-
-	private void enrichNodeInformation(MusicArtistGraph graph) {
-		for (MusicArtist a : graph.getArtists()){
+/*
+	private void enrichNodeInformation(AirlineGraph graph) {
+		for (Airline a : graph.getAirlines()){
 			enrichSingleArtist(a);
 		}
 	}
@@ -266,5 +278,5 @@ public class AirportHubFetcher {
 
 		LOG.debug("Querying: {}", queryString);
 		return queryString;
-	}
+	}*/
 }
