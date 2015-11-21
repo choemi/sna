@@ -12,7 +12,7 @@ public class AirportHubFetcher_Main {
 	public static void main(String[] args) {
 		String FILE = "AirportHub-associations.gexf";
 		
-		AirlineAirportGraph graph = new AirportHubFetcher().fetch();
-		//new AirportHubGephiExport(FILE).export(graph);
+		AirlineAirportGraph graph = new ANAFetcher().fetch();
+		new AirportHubGephiExport(FILE).export(graph);
 	}
 }

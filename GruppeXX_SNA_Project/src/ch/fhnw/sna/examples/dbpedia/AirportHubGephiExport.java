@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,13 +12,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.org.apache.bcel.internal.generic.ObjectType;
-
 import ch.fhnw.sna.examples.dbpedia.model.Airline;
 import ch.fhnw.sna.examples.dbpedia.model.AirlineAirportGraph;
 import ch.fhnw.sna.examples.dbpedia.model.Airport;
-import ch.fhnw.sna.examples.dbpedia.model.MusicArtist;
-import ch.fhnw.sna.examples.dbpedia.model.MusicArtistGraph;
 import it.uniroma1.dis.wsngroup.gexf4j.core.Edge;
 import it.uniroma1.dis.wsngroup.gexf4j.core.EdgeType;
 import it.uniroma1.dis.wsngroup.gexf4j.core.Gexf;
