@@ -1,14 +1,14 @@
 package ch.fhnw.sna.examples.dbpedia.model;
 
-public class Airline {
+public class Airport {
 	private final String id;
 	private String name;
 	
-	public Airline(String id) {
+	public Airport(String id) {
 		this.id = id;
 	}
 
-	public Airline(String id, String name) {
+	public Airport(String id, String name) {
 		this(id);
 		this.name = name;
 	}
@@ -29,7 +29,7 @@ public class Airline {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Airline other = (Airline) obj;
+		Airport other = (Airport) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

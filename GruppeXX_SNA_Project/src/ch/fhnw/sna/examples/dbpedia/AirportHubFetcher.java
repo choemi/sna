@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.Sets;
 
 import ch.fhnw.sna.examples.dbpedia.model.Airline;
-import ch.fhnw.sna.examples.dbpedia.model.AirlineGraph;
+import ch.fhnw.sna.examples.dbpedia.model.AirlineAirportGraph;
 
 /**
  * Fetches the Music Artist Association Network from dbpedia
@@ -49,8 +49,8 @@ public class AirportHubFetcher {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AirportHubFetcher.class);
 
-	public AirlineGraph fetch() {
-		AirlineGraph graph = new AirlineGraph();
+	public AirlineAirportGraph fetch() {
+		AirlineAirportGraph graph = new AirlineAirportGraph();
 		LOG.info("Start fetching Music Artist Network");
 		fetchAssociations(graph);
 		LOG.info("Fiinished fetching Music Artist Network");
@@ -60,7 +60,7 @@ public class AirportHubFetcher {
 		return graph;
 	}
 
-	private void fetchAssociations(AirlineGraph graph) {
+	private void fetchAssociations(AirlineAirportGraph graph) {
 		final int LIMIT = Integer.MAX_VALUE; // Means no limit
 		boolean hasMoreResults = true;
 		int currentOffset = 0;

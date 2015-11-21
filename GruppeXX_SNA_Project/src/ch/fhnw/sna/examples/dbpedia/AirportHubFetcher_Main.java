@@ -1,6 +1,6 @@
 package ch.fhnw.sna.examples.dbpedia;
 
-import ch.fhnw.sna.examples.dbpedia.model.AirlineGraph;
+import ch.fhnw.sna.examples.dbpedia.model.AirlineAirportGraph;
 // TEST
 /**
  * 
@@ -12,7 +12,7 @@ public class AirportHubFetcher_Main {
 	public static void main(String[] args) {
 		String FILE = "AirportHub-associations.gexf";
 		
-		AirlineGraph graph = new AirportHubFetcher().fetch();
+		AirlineAirportGraph graph = new AirportHubFetcher().fetch();
 		//new AirportHubGephiExport(FILE).export(graph);
 	}
 }
