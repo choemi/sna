@@ -30,7 +30,7 @@ import it.uniroma1.dis.wsngroup.gexf4j.core.impl.StaxGraphWriter;
 import it.uniroma1.dis.wsngroup.gexf4j.core.impl.data.AttributeListImpl;
 
 public class AirportHubGephiExport {
-	private static final Logger LOG = LoggerFactory.getLogger(MusicArtistGephiExport.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AirportHubGephiExport.class);
 	private static final String OUTPUT_FOLDER = "output/AirportHub/";
 	
 	private final String OUTPUT_FILE;

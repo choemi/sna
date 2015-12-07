@@ -38,17 +38,17 @@ public class ANAFetcher {
 		int currentOffset = 0;
 		int fetchedTotal = 0;
 		while (hasMoreResults && fetchedTotal < LIMIT) {
-			String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" 
-							 + "PREFIX dbo: <http://dbpedia.org/ontology/subsidiary> \n"
-							 + "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
-						+ "SELECT ?Company ?HubAirport ?Alliance ?ParentCompany \n"
-						     + " WHERE { { { ?Company <http://dbpedia.org/ontology/hubAirport> ?HubAirport } "
-						     + " UNION  { ?Company <http://dbpedia.org/property/hubs> ?HubAirport } "
-						     + "}.FILTER regex(?HubAirport, \"http\") "
-						     + ". OPTIONAL { ?Company  <http://dbpedia.org/ontology/alliance> ?Alliance}"
-						     + ". OPTIONAL { ?Company  <http://dbpedia.org/ontology/parentCompany> ?ParentCompany} }  LIMIT 5000 OFFSET 1"; 
+			String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
+					+ "PREFIX dbo: <http://dbpedia.org/ontology/subsidiary>"
+					+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+					+ "SELECT ?AirlineUri ?HubAirportUri ?AirlineName ?HubAirportName "
+					+ "WHERE { ?AirlineUri <http://dbpedia.org/ontology/hubAirport> ?HubAirportUri. "
+					+ "?AirlineUri rdfs:label ?AirlineName . ?HubAirportUri rdfs:label ?HubAirportName . "
+					+ "FILTER langMatches( lang(?AirlineName ), \"en\" ) . "
+					+ "FILTER langMatches( lang(?HubAirportName ), \"en\" ) ."
+					+ "}  LIMIT 5000 OFFSET  1"; 
 			
-			LOG.debug("Querying: {}", queryString);
+					LOG.debug("Querying: {}", queryString);
 
 			Query query = QueryFactory.create(queryString);
 			int resultCounter = 0;
@@ -58,10 +58,10 @@ public class ANAFetcher {
 				while (results.hasNext()) {
 					++resultCounter;
 					QuerySolution sol = results.next();
-					String airlineUri = sol.getResource("sourceuri").getURI();
-					String airportUri = sol.getResource("targeturi").getURI();
-					String airline = sol.getLiteral("sourcename").getLexicalForm();
-					String airport = sol.getLiteral("targetname").getLexicalForm();
+					String airlineUri = sol.getResource("AirlineUri").getURI();
+					String airportUri = sol.getResource("HubAirportUri").getURI();
+					String airline = sol.getLiteral("AirlineName").getLexicalForm();
+					String airport = sol.getLiteral("HubAirportName").getLexicalForm();
 					graph.addAirlineIfNotExists(airlineUri, airline);
 					graph.addAirportIfNotExists(airportUri, airport);
 					graph.addHub(airlineUri, airportUri);
