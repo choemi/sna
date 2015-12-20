@@ -19,7 +19,7 @@ public class ANAFetcher {
 	private static final String DBPEDIA_SPARQL_ENDPOINT = "http://dbpedia.org/sparql";
 	private static final DateTimeFormatter ACTIVE_YEAR_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	
-	private static final Logger LOG = LoggerFactory.getLogger(AirportHubFetcher.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ANAFetcher.class);
 	
 	public AirlineAirportGraph fetch() {
 		AirlineAirportGraph graph = new AirlineAirportGraph();
@@ -38,17 +38,18 @@ public class ANAFetcher {
 		int currentOffset = 0;
 		int fetchedTotal = 0;
 		while (hasMoreResults && fetchedTotal < LIMIT) {
-			String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>"
-					+ "PREFIX dbo: <http://dbpedia.org/ontology/subsidiary>"
-					+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>"
+			String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n "
+					+ "PREFIX dbo: <http://dbpedia.org/ontology/subsidiary> \n"
+					+ "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n"
 					+ "SELECT ?AirlineUri ?HubAirportUri ?AirlineName ?HubAirportName "
 					+ "WHERE { ?AirlineUri <http://dbpedia.org/ontology/hubAirport> ?HubAirportUri. "
-					+ "?AirlineUri rdfs:label ?AirlineName . ?HubAirportUri rdfs:label ?HubAirportName . "
+					+ "?AirlineUri rdfs:label ?AirlineName . ?HubAirportUri rdfs:label ?HubAirportName. "
 					+ "FILTER langMatches( lang(?AirlineName ), \"en\" ) . "
-					+ "FILTER langMatches( lang(?HubAirportName ), \"en\" ) ."
-					+ "}  LIMIT 5000 OFFSET  1"; 
+					+ "FILTER langMatches( lang(?HubAirportName ), \"en\" ) .}  "
+					+ "LIMIT 5000 OFFSET " + currentOffset;
+						      
 			
-					LOG.debug("Querying: {}", queryString);
+			LOG.debug("Querying: {}", queryString);
 
 			Query query = QueryFactory.create(queryString);
 			int resultCounter = 0;
